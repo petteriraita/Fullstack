@@ -7,7 +7,7 @@ sequenceDiagram
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
     activate server
-    Server responds with accepting bytes
+    Note left of server:  accepting bytes
     server-->>browser: {"accepting bytes"}
     deactivate server
     
