@@ -1,4 +1,3 @@
-import Part from "./Part"
 
 const Total = ({ parts }) => {
   console.log('the Total component was called')
