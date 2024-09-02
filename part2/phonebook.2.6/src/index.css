@@ -20,7 +20,7 @@ a {
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #13f112;
 }
 
 body {
@@ -37,7 +37,7 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 3px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -48,7 +48,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #13f112;
 }
 button:focus,
 button:focus-visible {
@@ -66,4 +66,13 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+.notifCSS {
+  color: red;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
 }

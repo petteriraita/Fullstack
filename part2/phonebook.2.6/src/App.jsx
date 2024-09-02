@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
+import {StateInfo} from './components/StateInfo'
+import Notification from './components/Notification'
 import Event from './components/Event'
 import Persons from './components/Persons'
+import './index.css'
 import personService from './services/personJSservice'
 
 
@@ -9,6 +12,7 @@ const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [notification, setnotification] = useState(null)
   const [newFilter, setNewFilter] = useState('')
 
 
@@ -34,6 +38,37 @@ const App = () => {
     }
   }
 
+  const handleNewNotification = (type, name) => {
+    console.log(`passed the ${name}`)
+    if (type === 'name') {
+
+      const name_string = `Added ${name}`
+      console.log(name_string)
+      setnotification(name_string)
+    }
+    else if (type === 'number') {
+
+      const name_string = `Updated the number of ${name} to ${newNumber}`
+      console.log(name_string)
+      setnotification(name_string)
+    }
+    else if (type === 'delete_works') {
+
+      const name_string = `Information of ${name} deleted successfully` 
+      console.log(name_string)
+      setnotification(name_string)
+    }
+    else if (type === 'failure') {
+
+      const name_string = `Information of ${name} has already been removed from server`
+      console.log(name_string)
+      setnotification(name_string)
+    }
+    setTimeout(() => {
+          setnotification(null)
+        }, 5000)
+  }
+
   const getNextId = () => {
     return (Math.max(...persons.map(p => p.id)) + 1).toString();
   }
@@ -50,26 +85,41 @@ const App = () => {
 
     if (existingPerson) {
       if (window.confirm(`${newName} is already added to the phonebook, replace the number with the new one?`)) {
-        console.log(`Adding a new number for the name: ${existingPerson.name} person`)
-        console.log(`Adding a new number for the id: ${existingPerson.id} person`)
         const updatedPerson = { ...existingPerson, number: newNumber }
-        console.log(`updatedPerson: Adding a new number for the name: ${updatedPerson.name} person`)
-        console.log(`updatedPerson: Adding a new number for the id: ${updatedPerson.id} person`)
+
+        console.log(`starting to add a new number for the name: ${existingPerson.name} person`)
+        console.log(`starting to add a new number for the id: ${existingPerson.id} person`)
+        console.log(`updatedPerson: starting to add a new number for the name: ${updatedPerson.name} person`)
+        console.log(`updatedPerson: starting to add a new number for the id: ${updatedPerson.id} person`)
+
         personService.updateNumber(updatedPerson)
           .then(response => {
-            setPersons(persons.map(per => 
-              per.id != existingPerson.id ? per : response.data 
-            ))
-            setNewNumber(newNumber)
-            setNewName('') // clear the input field
-            setNewNumber('') // clear the input field
-            console.log(`the update response: ${response.data}`)
+            if (response.success) {
+              setPersons(persons.map(per =>
+                per.id !== existingPerson.id ? per : response.axiosResponse.data
+              ))
+
+              setNewNumber(newNumber)
+              setNewName('') // clear the input field
+              setNewNumber('') // clear the input field
+              // console.log(`the update response.axiosResponse: ${JSON.stringify(response.axiosResponse, null, 2)}`)
+              // console.log(`the update response.axiosResponse.data: ${response.axiosResponse.data}`)
+              console.log(`number of name: ${newName} updated`)
+              handleNewNotification('number', newName)
+            }
+            else {
+              console.log("this should never happen as rejected promises don't go to 'then' block :)")
+            }
           })
-        console.log(`number of name: ${newName} updated`)
+          .catch(error => {
+            console.log("failure -- the promise was not a success", error)
+            handleNewNotification('failure', newName)
+          })
       }
 
     }
     else {
+      handleNewNotification('name', newName)
       createNewPerson()
     }
 
@@ -87,10 +137,9 @@ const App = () => {
         setPersons(persons.concat(returnedPerson))
         setNewName('') // clear the input field
         setNewNumber('') // clear the input field
-
       })
-
   }
+
   // Expose a function to change the name from the console
   window.changeName = (newNameValue) => {
     setNewName(newNameValue);
@@ -98,21 +147,15 @@ const App = () => {
 
   return (
     <div>
-      <div style={{ border: '1px solid black', padding: '10px', marginTop: '20px' }}>
-        <h3>Current State</h3>
-        <p><strong>New Name:</strong> {newName}</p>
-        <p><strong>New Number:</strong> {newNumber}</p>
-        <p><strong>Filter:</strong> {newFilter}</p>
-        <p><strong>Persons:</strong> {JSON.stringify(persons, null, 2)}</p>
-      </div>
+      <StateInfo notification = {notification} newFilterParam={newFilter} newName={newName} newNumber={newNumber} persons = {persons} /> 
       <h2>Phonebook</h2>
-
+      <Notification message={notification} />
+      {/* <Notification message={notification} /> */}
       <Filter newFilterParam={newFilter} newFilterFunction={setNewFilter} />
 
       <h2>add a new</h2>
 
       <Event commonEventHandler={commonEventHandler} newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} />
-
 
 
       {/* {console.log("the Persons component is called from APP")} */}
@@ -122,7 +165,7 @@ const App = () => {
       {/*console.log(`the persons array: ${persons}`)*/}
       {/* {console.log(`the personsToShow array: ${personsToShow()}`)} */}
 
-      <Persons personsToShow={personsToShow} />
+      <Persons handleNewNotification = {handleNewNotification} personsToShow={personsToShow} persons = {persons}  setPersons= {setPersons}/>
 
 
     </div>

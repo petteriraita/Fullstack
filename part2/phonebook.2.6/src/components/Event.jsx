@@ -1,4 +1,4 @@
-const Event = ({ commonEventHandler, newName, setNewName, newNumber, setNewNumber }) => {
+const Event = ({commonEventHandler, newName, setNewName, newNumber, setNewNumber }) => {
   const handleAddingName = (event) => {
     // console.log(`MY event.target.value: ${event.target.value}`)
     setNewName(event.target.value)
@@ -7,7 +7,6 @@ const Event = ({ commonEventHandler, newName, setNewName, newNumber, setNewNumbe
     // console.log(`MY event.target.value: ${event.target.value}`)
     setNewNumber(event.target.value)
   }
-
 
 
 
