@@ -63,6 +63,7 @@ const App = () => {
       const name_string = `Information of ${name} has already been removed from server`
       console.log(name_string)
       setnotification(name_string)
+      console.log("the notification was SENT")
     }
     setTimeout(() => {
           setnotification(null)
@@ -145,15 +146,24 @@ const App = () => {
     setNewName(newNameValue);
   };
 
+  // make the stateinfo be optional
+  let showstateinfo = false;
+  let stateinfoComponent = null;
+  if (showstateinfo) {
+    stateinfoComponent = (
+      <StateInfo notification={notification} newFilterParam={newFilter} newName={newName} newNumber={newNumber} persons={persons} />
+    )
+  }
+
   return (
     <div>
-      <StateInfo notification = {notification} newFilterParam={newFilter} newName={newName} newNumber={newNumber} persons = {persons} /> 
+      {stateinfoComponent}
       <h2>Phonebook</h2>
       <Notification message={notification} />
       {/* <Notification message={notification} /> */}
       <Filter newFilterParam={newFilter} newFilterFunction={setNewFilter} />
 
-      <h2>add a new</h2>
+      <h4>add a new number:</h4>
 
       <Event commonEventHandler={commonEventHandler} newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} />
 

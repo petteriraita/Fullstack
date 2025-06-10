@@ -20,7 +20,7 @@ const updateNumber = async (newObject) => {
         return Promise.resolve({success: true, axiosResponse: response});
     }
     catch (error) {
-        console.error(`a failed .put request with response error:`, error);
+        console.error(`a failed '.put' request with response error: `, error);
         return Promise.reject({success: false})
     }
 }
