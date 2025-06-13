@@ -1,4 +1,4 @@
-const Search = ({ searchParam, setSearchTerm }) => {
+const Search = ({ searchTerm, setSearchTerm }) => {
     const handleSearch = (event) => {
         setSearchTerm(event.target.value)
     }
@@ -6,7 +6,7 @@ const Search = ({ searchParam, setSearchTerm }) => {
         <form>
             <div>
                 find countries <input
-                    value={searchParam}
+                    value={searchTerm}
                     onChange={handleSearch}
                 />
             </div>

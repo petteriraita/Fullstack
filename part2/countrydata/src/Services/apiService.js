@@ -6,14 +6,16 @@ const onSearch = async () => {
     try {
         const response = await axios
             .get(`${baseURL}all`)
-        console.log(`the onSearch response worked: `)
+        // console.log(`the onSearch response worked: `)
         // console.log(`${JSON.stringify(response.data)}`)
+            // console.log(`results from apiservice.js: ${JSON.stringify(response.data)}`)  
         return response.data
     }
     catch (error) {
         console.error(`BACKEND failed .get request with response error:`, error);
     }
 }
+
 
 export default {
     onSearch

@@ -1,15 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Search from './Components/search'
 import Results from './Components/results'
+import apiService from './Services/apiService'
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [results, setResults] = useState('')
+  const [results, setResults] = useState([])
+
 
   return (
     <>
-      <Search searchParam = {searchTerm} setSearchTerm ={setSearchTerm}/>
-      <Results searchParam = {searchTerm} setSearchTerm ={setSearchTerm}results ={results}  setResults ={setResults}/>
+      <Search searchTerm = {searchTerm} setSearchTerm ={setSearchTerm}/>
+      <Results searchTerm = {searchTerm} setSearchTerm ={setSearchTerm} results ={results}  setResults ={setResults}/>
     </>
   )
 }
