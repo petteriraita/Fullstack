@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import apiService from "../Services/apiService"
 
 
-const Results = ({ searchTerm, setSearchTerm, results, setResults, weatherdata, setWeatherdata }) => {
+const Results = ({ searchTerm, results, setResults, weatherdata, setWeatherdata }) => {
     const [country, setCountry] = useState('')
 
     // NOTE: the last parameter of this useEffect is the dependency array (aka the thing that causes the change and the useeffect to happen)
