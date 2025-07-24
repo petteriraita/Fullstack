@@ -8,6 +8,9 @@ import './index.css'
 import personService from './services/personJSservice'
 
 
+const port = import.meta.env.VITE_API_PORT;
+
+
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
@@ -18,6 +21,8 @@ const App = () => {
 
 
   useEffect(() => {
+    console.log('useeffect ran');
+    
     personService
       .getAll()
       .then(returnedPerson => {
@@ -29,6 +34,9 @@ const App = () => {
 
 
   const personsToShow = () => {
+    console.log('callling personsToShow');
+    console.log('persons: ', persons);
+    
     if (newFilter === '') {
       return persons
     }
@@ -78,20 +86,12 @@ const App = () => {
 
 
   const commonEventHandler = (event) => {
-    console.log(`the event handler starts`)
     const existingPerson = persons.find(per => per.name === newName)
     event.preventDefault() // stopping the refresh of the page
-    console.log('Button clicked', event.target)
-
 
     if (existingPerson) {
       if (window.confirm(`${newName} is already added to the phonebook, replace the number with the new one?`)) {
         const updatedPerson = { ...existingPerson, number: newNumber }
-
-        console.log(`starting to add a new number for the name: ${existingPerson.name} person`)
-        console.log(`starting to add a new number for the id: ${existingPerson.id} person`)
-        console.log(`updatedPerson: starting to add a new number for the name: ${updatedPerson.name} person`)
-        console.log(`updatedPerson: starting to add a new number for the id: ${updatedPerson.id} person`)
 
         personService.updateNumber(updatedPerson)
           .then(response => {
@@ -154,6 +154,7 @@ const App = () => {
       <StateInfo notification={notification} newFilterParam={newFilter} newName={newName} newNumber={newNumber} persons={persons} />
     )
   }
+  console.log('port: ', port);
 
   return (
     <div>

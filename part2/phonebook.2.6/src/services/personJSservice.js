@@ -1,9 +1,13 @@
 import axios from "axios";
-const baseUrl = 'http://localhost:3001/persons'
+const port = import.meta.env.VITE_API_PORT;
+const baseUrl = `http://localhost:${port}/persons`
 
 const getAll = () => {
     const getRequest = axios.get(baseUrl)
-    return getRequest.then(response => response.data)
+    return getRequest.then(response => {
+        console.log('response.data: ', response.data);
+        return response.data;
+    })
 }
 
 const updateNumber = async (newObject) => {
