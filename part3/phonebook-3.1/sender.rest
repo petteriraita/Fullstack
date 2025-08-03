@@ -1,0 +1,7 @@
+GET http://localhost:3001/api/persons/2
+
+
+### test (you need to use ### above a request to make it sendable
+DELETE http://localhost:3001/api/persons/2
+
+

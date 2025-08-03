@@ -29,6 +29,13 @@ app.get('/test/:id', (req, res) => {
 })
 
 
+app.delete('/api/persons/:num', (req, res) => {
+  const num = req.params.num
+  const filteredPersons = persons.filter(p => 
+    p.id !== num
+  )
+  return res.json(filteredPersons)
+})
 app.get('/api/persons', (request, response) => {
     return response.json(persons)
 }
