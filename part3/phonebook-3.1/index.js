@@ -55,13 +55,27 @@ app.post('/api/persons/', (req, res) => {
       error: "no name given"
     })
   }
+  if (!req.body.number) {
+    return res.status(400).json({
+      error: "no number given"
+    })
+  }
+  const nrofduplicates = persons.filter(p =>
+    p.name === req.body.name
+  ).length
+  if (nrofduplicates > 0) {
+    return res.status(400).json({
+      error: "name already exists"
+    })
+  }
   const newperson = {
     id: generateID(),
-    number: req.body.number,
-    name: req.body.name
+    name: req.body.name,
+    number: req.body.number
   }
   // persons.concat(newperson)
-  res.json(persons.concat(newperson))
+  persons.push(newperson)
+  res.json(persons)
 })
 
 app.get('/api/persons/:num', (request, response) => {

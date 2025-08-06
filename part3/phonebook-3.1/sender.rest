@@ -22,12 +22,21 @@ content-type: application/json
 }
 
 
+
 ### testing post
 POST http://localhost:3001/api/persons HTTP/1.1
 content-type: application/json
 
 {
-    "name": "test",
+    "name": "test"
+
+}
+
+### testing post
+POST http://localhost:3001/api/persons HTTP/1.1
+content-type: application/json
+
+{
     "number": "001100"
 
 }
