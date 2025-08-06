@@ -2,6 +2,14 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 
+
+
+
+generateID = () => {
+  const newid = Math.floor(Math.random() * 100000000)
+  return String(newid) 
+}
+
 const persons = [
     { 
       "id": "1",
@@ -40,19 +48,28 @@ app.get('/api/persons', (request, response) => {
     return response.json(persons)
 }
 )
+app.post('/api/persons/', (req, res) => {
+
+  if (!req.body.name) {
+    return res.status(400).json({
+      error: "no name given"
+    })
+  }
+  const newperson = {
+    id: generateID(),
+    number: req.body.number,
+    name: req.body.name
+  }
+  // persons.concat(newperson)
+  res.json(persons.concat(newperson))
+})
+
 app.get('/api/persons/:num', (request, response) => {
   const num = request.params.num
-  // console.log('got the num ', num);
   
   // // you cannot send 2 responses, since those flush the headers and they cant bbe changed
   // // response.send('<p>some html</p>')
 
-  // persons.forEach( p => {
-  //   console.log('p.id: ', p.id);
-  //   console.log('p.name: ', p.name);
-    
-  // })
-  // console.log('persons.length: ', persons.length);
   const filteredPersons = persons.filter(p => p.id === num)
   console.log('filteredPersons.length: ', filteredPersons.length);
   if (filteredPersons.length === 1) {

@@ -1,7 +1,33 @@
 GET http://localhost:3001/api/persons/2
 
 
+### others
+GET http://localhost:3001/api/persons/
+
+### others
+GET http://localhost:3001/api/persons
+
 ### test (you need to use ### above a request to make it sendable
 DELETE http://localhost:3001/api/persons/2
 
 
+### testing post
+POST http://localhost:3001/api/persons HTTP/1.1
+content-type: application/json
+
+{
+    "name": "test",
+    "number": "001100"
+
+}
+
+
+### testing post
+POST http://localhost:3001/api/persons HTTP/1.1
+content-type: application/json
+
+{
+    "name": "test",
+    "number": "001100"
+
+}
